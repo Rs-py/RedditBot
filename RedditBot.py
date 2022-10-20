@@ -4,15 +4,7 @@ from datetime import datetime
 import time
 import schedule 
 
-#v2 Final - Push = Blocked
-#UPDATE TO USE ALL CSS AS IT IS MORE RELIABLE SINCE IT USES ELEMENTS INSTEAD OF NAVIGATION
-#ALSO XPATH IS DOIFFERENT FOR EACH BROWSER CAUSING PROBLEMS; CSS IS ALSO FASTER 
-
 forumlist = [#Enter List of forums here]  
-
-
-
-
 
 options = webdriver.FirefoxOptions()
 options.set_preference("dom.push.enabled", False)
@@ -36,7 +28,6 @@ p_loginl = driver.find_element_by_xpath("/html/body/div/main/div[1]/div/div[2]/f
 
 time.sleep(20) 
 
-
 def postjob():
     for x in forumlist:
 
@@ -50,8 +41,6 @@ def postjob():
         enterforum.send_keys(x)
 
         time.sleep(3)
-
-
 
         jstitletext = """
           var elm = arguments[0], txt = arguments[1];
@@ -67,7 +56,6 @@ def postjob():
         entertitletext.send_keys(titletext)
 
         time.sleep(1)
-
 
         jsmaintext = """
           var elm = arguments[0], txt = arguments[1];
@@ -97,11 +85,8 @@ def postjob():
         
         time.sleep(40)
 
-
-
 schedule.every(30).minutes.do(postjob)
 
 while True:
     schedule.run_pending()
     time.sleep(1)
-
