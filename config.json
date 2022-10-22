@@ -1,0 +1,7 @@
+{
+    "username": "your_username_here",
+    "password": "your_password_here",
+    "title_text": "your_title_text_here",
+    "main_text": "your_main_text_here",
+    "forum_list": ["forum", "list"]
+}
