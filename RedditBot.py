@@ -3,8 +3,11 @@ from selenium.webdriver.firefox.options import Options
 from datetime import datetime
 import time
 import schedule 
+from helpers import get_config
 
-forumlist = [#Enter List of forums here]  
+config = get_config()
+
+forumlist = config.get('forum_list')
 
 options = webdriver.FirefoxOptions()
 options.set_preference("dom.push.enabled", False)
@@ -14,13 +17,15 @@ time.sleep(3)
 
 driver.get('https://www.reddit.com/login/?dest=https%3A%2F%2Fwww.reddit.com%2F')
 
+username = config.get('username')
 entername = driver.find_element_by_id("loginUsername")
-entername.send_keys("#EnterUsername")
+entername.send_keys(username)
 
 time.sleep(2)
 
+password = config.get('password')
 enterpw = driver.find_element_by_id("loginPassword")
-enterpw.send_keys("#EnterPassword")
+enterpw.send_keys(password)
 
 time.sleep(1) 
 
@@ -49,7 +54,7 @@ def postjob():
           """
 
         entertitletext = driver.find_element_by_css_selector("._2wyvfFW3oNcCs5GVkmcJ8z > textarea:nth-child(1)")
-        titletext = "#EnterTitleTextHere"
+        titletext = config.get('title_text')
 
         driver.execute_script(jstitletext, entertitletext, titletext)
         entertitletext.clear() #Title was being entered twice so this clears first entry
@@ -64,7 +69,7 @@ def postjob():
           """
         entermaintext = driver.find_element_by_css_selector("#SHORTCUT_FOCUSABLE_DIV > div:nth-child(4) > div > div > div > div._3ozFtOe6WpJEMUtxDOIvtU > div._1vyLCp-v-tE5QvZovwrASa > div._1OVBBWLtHoSPfGCRaPzpTf._3nSp9cdBpqL13CqjdMr2L_._2udhMC-jldHp_EpAuBeSR1.PaJBYLqPf_Gie2aZntVQ7 > div.HOFZo2X7Fr6JVBztpsByj > div._3w_665DK_NH7yIsRMuZkqB > div._1zq6UabIEJJ-z9grsiCJY7 > div:nth-child(2) > div > div > div._2baJGEALPiEMZpWB2iWQs7 > div > div:nth-child(1) > div > div > div")
         #entermaintext = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div[2]/div/div/div/div[2]/div[3]/div[1]/div[2]/div[3]/div[2]/div[2]/div/div/div[3]/div/div[1]/div/div/div/div/div/div[1]/div/span/span")
-        maintext = "#EnterMainTextHere"
+        maintext = config.get('main_text')
 
         driver.execute_script(jstitletext, entermaintext, maintext)
         entermaintext.send_keys(maintext)
@@ -84,9 +89,10 @@ def postjob():
             print("Successfully posted to ", x ,"at", now,".")
         
         time.sleep(40)
-
+ 
 schedule.every(30).minutes.do(postjob)
 
 while True:
     schedule.run_pending()
     time.sleep(1)
+
